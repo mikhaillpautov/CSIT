@@ -1,0 +1,560 @@
+//Глупая сортировка
+#include <iostream>
+using namespace std;
+int main()
+{
+    int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 11;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    int i = 0;
+    while (i < n-1)
+       {if (mas[i] > mas[i+1]) 
+           {swap(mas[i],mas[i+1]); i = 0;}
+       else i++;
+       }
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    return 0;
+}
+//---------------------------------------------------
+//Сортировка пузырьком
+#include <iostream>
+using namespace std;
+int main()
+{
+    int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 11;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    for(int i = 0; i < n; i++)
+    for(int j = n-1; j > i; j--)
+       if (mas[j-1] > mas[j]) 
+           swap(mas[j-1],mas[j]); 
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    return 0;
+}
+//-----------------------------------------------
+//Шейкерная сортировка
+#include <iostream>
+using namespace std;
+int main()
+{
+    int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 11;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    bool f = true;
+    int begin = -1, end = n-1;
+    while (f)
+    { bool g = false;
+      begin++;
+        for(int i = begin; i < end; i++)
+           if (mas[i] > mas[i+1]) 
+             { swap(mas[i],mas[i+1]);  g = true;}
+        if (!g) f = false;
+        end--;
+        g = false;
+        for(int i = end; i >= begin; i--)
+           if (mas[i] > mas[i+1]) 
+             { swap(mas[i],mas[i+1]);  g = true;}
+    }
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    return 0;
+}
+//-------------------------------------------
+//Сортировка чет-нечет
+#include <iostream>
+using namespace std;
+int main()
+{
+    int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 11;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    for(int i = 0; i < n; i++)
+    {       if (i%2 == 0) 
+           { for(int j = 2; j <= n-1 ; j+=2)
+              if (mas[j-1] > mas[j]) swap(mas[j-1],mas[j]);
+           }
+            else
+            {for(int j = 1; j <= n-1 ; j+=2)
+              if (mas[j-1] > mas[j]) swap(mas[j-1],mas[j]);
+            }
+    }
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    return 0;
+}
+//-------------------------------------------
+//Сортировка расческой
+#include <iostream>
+using namespace std;
+int main()
+{
+    int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 11;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    int gap = n/1.247;
+    while (gap >= 1)
+    {
+        if(gap < 1) gap = 1;
+        for(int i = 0; i < n - gap; i++)
+           if (mas[i] > mas[i+gap]) swap(mas[i],mas[i+gap]);
+        gap /= 1.247;
+    }
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    return 0;
+}
+//-----------------------------------------------
+//Гномья сортировка
+#include <iostream>
+using namespace std;
+int main()
+{
+    int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 11;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    int i = 1;
+    while (i < n)
+    {
+        if(!i) i++;
+        if(mas[i-1] <= mas[i]) i++;
+        else {swap(mas[i-1],mas[i]);
+             i--;}
+    }
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    return 0;
+}
+//--------------------------------------------------------------------
+//Быстрая сортировка
+#include <iostream>
+using namespace std;
+void sort(int *mas, int L, int R)
+{
+    int i = L;
+    int j = R;
+    int k = mas[(j+i)/2];
+    while( i <= j )
+    {
+        while(mas[i] < k ) i++;
+        while(mas[j]  > k ) j--;
+        if ( i <= j )
+        {
+            swap(mas[i],mas[j]);
+            i++; j--;
+        }
+    } 
+    if ( j-L > 0 ) sort(mas,L,j);
+    if ( R-i > 0 ) sort(mas,i,R);
+}
+int main()
+{
+    int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 11;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    sort(mas,0,n-1);
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    return 0;
+}
+//----------------------------------------------
+//Сортировка вставками
+#include <iostream>
+using namespace std;
+int main()
+{
+    int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 11;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    int i = 0;
+    while (i <= n-1)
+       {
+           int j = i;
+           while (mas[j] < mas[j-1] && j > 0) 
+           {swap(mas[j-1],mas[j]); j--;}
+            i++;
+       }
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    return 0;
+}
+//------------------------------------------------
+//Сортировка Шелла
+#include <iostream>
+using namespace std;
+int main()
+{
+    int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 11;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    int step = n/2;
+    while (step >= 1)
+       {
+           for (int i = 0; i < n-step; i++)
+           {
+               int j = i;
+               while (mas[j] > mas[j+step] && j >= 0) 
+               {swap(mas[j+step],mas[j]); j--;}
+           }
+            step/=2;
+       }
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    return 0;
+}
+//---------------------------------------------
+//Сортировка выбором
+#include <iostream>
+using namespace std;
+int main()
+{
+    int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 11;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    for (int i = 0; i < n; i++)
+           {   int min = mas[i];
+               int min_index = i;
+               for (int j = i+1; j <= n-1; j++)
+                  if (min > mas[j]) {min_index = j; min = mas[j];}
+               if(i!=min_index) swap(mas[i],mas[min_index]); 
+           }
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    return 0;
+}
+//-----------------------------------------
+//Сортировка выбором устойчивая
+#include <iostream>
+#include <list>
+#include <numeric>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    int n; cin >> n;
+    list <int> l;
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        l.push_back(rand() % 11);
+    for(auto it = l.begin(); it != l.end(); it ++)
+    cout << *it << " ";
+    cout << endl;
+    auto it = l.begin();
+    int i = 0;
+    while (i < l.size())
+           {   
+               auto  min_index = min_element(it, l.end());
+               int min = *min_index;
+               if (it != min_index) 
+                     {l.insert(it,min); l.erase(min_index);}
+                     else it++;
+               i++;
+           } 
+    for(auto it = l.begin(); it != l.end(); it ++)
+    cout << *it << " ";
+    cout << endl;
+    return 0;
+}
+//-----------------------------------------
+//Пирамидальная сортировка 
+#include <iostream>
+using namespace std;
+//просеивание кучи
+void heap(int *mas, int n, int i)
+{
+    int largest = i;   
+    int l = 2*i + 1; 
+    int r = 2*i + 2;
+    if (l < n && mas[l] > mas[largest])
+        largest = l;
+    if (r < n && mas[r] > mas[largest])
+        largest = r;
+    if (largest != i)
+    {
+        swap(mas[i],mas[largest]);
+        heap(mas, n, largest);
+    }
+}
+
+// Основная функция, выполняющая пирамидальную сортировку
+void Sort(int *mas, int n)
+{
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heap(mas, n, i);
+    for (int i=n-1; i>=0; i--)
+    {
+        swap(mas[0], mas[i]);
+        heap(mas, i, 0);
+    }
+}
+
+int main()
+{
+    int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 11;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    Sort(mas, n);
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+ return 0;
+}
+//-------------------------------------------
+//Сортировка слиянием
+#include <iostream>
+using namespace std;
+void Merge(int *mas, int left, int right)
+{
+     int middle, start, final, j;
+     int *temp=new int[right + left];
+     middle=(left+right)/2; 
+     start=left; final=middle+1; 
+     for(j=left; j<=right; j++) {
+     if ((start<=middle) && ((final>right) || (mas[start]<mas[final])))
+     {
+          temp[j]=mas[start];
+          start++;
+     }
+     else
+     {
+          temp[j]=mas[final];
+          final++;
+     }
+     }
+     for (j=left; j<=right; j++) mas[j]=temp[j];
+     delete []temp;
+}
+void Sort(int *mas, int left, int right)
+{
+     if (left<right)
+     {
+     Sort(mas, left, (left+right)/2); //сортировка левой части
+     Sort(mas, (left+right)/2+1, right); //сортировка правой части
+     Merge(mas, left, right); //слияние двух частей
+     }
+}
+int main()
+{
+int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 11;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    Sort(mas, 0, n-1); 
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    return 0;
+}
+//--------------------------------------
+//Сортировка подсчетом
+#include <iostream>
+#include <cmath>
+using namespace std;
+void Sort(int *mas, int n)
+{    int min = mas[0];
+     int max = mas[0];
+     for(int i=0; i < n; i++)
+     { 
+         if (max < mas[i]) max = mas[i];
+         if (min > mas[i]) min = mas[i];
+     }
+     int k = abs(max - min);
+     int *B = new int [k];
+     for(int i=min; i <= max; i++) 
+        B[i] = 0;
+        int temp = min;
+     while (temp <= max)
+       {   
+           for(int i=0; i < n; i++)
+           if (mas[i] == temp) B[temp]++;
+           temp++;
+       }
+     for(int i=min; i <= max; i++) 
+         if (B[i]) 
+         {
+             for(int j=0; j < B[i]; j++) 
+             cout << i << " ";
+         }
+     delete []B;
+}
+int main()
+{
+int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 11;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    Sort(mas, n); 
+    return 0;
+}
+
+//-----------------------------------------------------
+//Блочная сортировка
+#include <iostream>
+#include <cmath>
+using namespace std;
+void sort ( int *mas, int n)
+{
+    int i = 0;
+    while (i <= n-1)
+       {
+           int j = i;
+           while (mas[j] < mas[j-1] && j > 0) 
+           {swap(mas[j-1],mas[j]); j--;}
+            i++;
+       }
+}
+void Sort(int *mas, int n)
+{    int p = n/3; 
+     int B[p+1][n];
+     int min = mas[0];
+     int max = mas[0];
+     for(int i=1; i < n; i++)
+     { 
+         if (max < mas[i]) max = mas[i];
+         if (min > mas[i]) min = mas[i];
+     }
+     int m = (max - min)/p;
+     for(int i=0; i <= p; i++)
+     for(int j=0; j < n; j++)
+         B[i][j] = max+1;
+     int l = 0;
+     int i = 0;
+     while (i <= p+1)
+     {   
+          l = 0;
+         for(int j=0; j < n; j++)
+         {   
+           if ( i == (mas[j] - min)/m ) { B[i][l] = mas[j]; l++; }
+         }
+         i++;
+     }
+     for(int i=0; i <= p; i++)
+          sort (B[i],n);
+      l = 0;
+      for(int i=0; i <= p; i++)
+      for(int j=0; j < n; j++)
+       if(B[i][j] < max+1) {mas[l] = B[i][j] ; l++;}
+    }
+int main()
+{
+int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 50;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    Sort(mas, n); 
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    return 0;
+}
+//--------------------------------------------
+//LSD сортировка
+#include <iostream>
+#include <vector>
+#include <cmath>
+using namespace std;
+void Sort(int *mas, int n)
+{    int p = 10; 
+     int k = 4;
+     vector<int> vec[p];
+     int i = 0; 
+     while (i<k)
+     {
+        for(int j=0; j < n; j++)
+        {
+            int m = mas[j]/pow(p,i);
+            vec[m%p].push_back(mas[j]);
+        }
+        int l = 0;
+        for(int i=0; i < p; i++)
+        for(int j=0; j < vec[i].size(); j++)
+            {mas[l] = vec[i][j]; l++;}
+        for(int i=0; i < p; i++)
+            vec[i].clear();
+        i++;
+     }        
+}
+int main()
+{
+int n; cin >> n;
+    int *mas = new int [n];
+    srand ((unsigned int)time(NULL));
+    for(int i=0; i < n; i++)
+        mas[i] = rand() % 10010;
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    Sort(mas, n); 
+    for(int i=0; i < n; i++)
+    cout << mas[i] << " ";
+    cout << endl;
+    return 0;
+}
